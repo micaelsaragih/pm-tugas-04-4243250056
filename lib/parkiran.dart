@@ -19,7 +19,8 @@ class Parkiran {
   final int kapasitas;
   final Duration jedaPalang;
   final List<Kendaraan> _terparkir = [];
-  final StreamController<String> _kejadian = StreamController<String>.broadcast();
+  final StreamController<String> _kejadian =
+      StreamController<String>.broadcast();
   int _pendapatan = 0;
   // Antrian internal menjaga urutan transaksi dan mencegah kapasitas terlampaui
   // ketika beberapa pemanggilan Future dilakukan hampir bersamaan.
@@ -53,11 +54,11 @@ class Parkiran {
         }
         kendaraan.catatMasuk(waktu ?? DateTime.now());
         _terparkir.add(kendaraan);
-        _kejadian.add('MASUK ${kendaraan.jenis} ${kendaraan.plat} (sisa $sisa)');
+        _kejadian
+            .add('MASUK ${kendaraan.jenis} ${kendaraan.plat} (sisa $sisa)');
       });
 
-  Future<int> keluar(String plat, {DateTime? waktu}) =>
-      _berurutan(() async {
+  Future<int> keluar(String plat, {DateTime? waktu}) => _berurutan(() async {
         await Future<void>.delayed(jedaPalang);
         final indeks = _terparkir.indexWhere((k) => k.plat == plat);
         if (indeks == -1) throw ParkirGagal('plat $plat tidak ditemukan');
@@ -66,7 +67,8 @@ class Parkiran {
         _terparkir.removeAt(indeks);
         kendaraan.catatKeluar();
         _pendapatan += tarif;
-        _kejadian.add('KELUAR ${kendaraan.jenis} ${kendaraan.plat} bayar Rp$tarif');
+        _kejadian
+            .add('KELUAR ${kendaraan.jenis} ${kendaraan.plat} bayar Rp$tarif');
         return tarif;
       });
 

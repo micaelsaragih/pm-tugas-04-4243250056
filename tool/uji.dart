@@ -22,9 +22,15 @@ Future<void> main() async {
     penuh = true;
   }
   assert(penuh);
-  assert(await parkiran.keluar('BK 1', waktu: waktu.add(const Duration(hours: 3))) == 6000);
-  assert(await parkiran.keluar('BK 2', waktu: waktu.add(const Duration(hours: 3))) == 15000);
-  assert(await parkiran.keluar('BK 3', waktu: waktu.add(const Duration(hours: 3))) == 7500);
+  assert(await parkiran.keluar('BK 1',
+          waktu: waktu.add(const Duration(hours: 3))) ==
+      6000);
+  assert(await parkiran.keluar('BK 2',
+          waktu: waktu.add(const Duration(hours: 3))) ==
+      15000);
+  assert(await parkiran.keluar('BK 3',
+          waktu: waktu.add(const Duration(hours: 3))) ==
+      7500);
   assert(parkiran.pendapatan == 28500 && parkiran.sisa == 3);
 
   await parkiran.masuk(truk, waktu: waktu);
@@ -32,5 +38,6 @@ Future<void> main() async {
   await parkiran.tutup();
   assert(log.length == 8);
   await sub.cancel();
-  print('Pengujian Sistem Parkir Kampus: LULUS (jalankan dengan --enable-asserts)');
+  print(
+      'Pengujian Sistem Parkir Kampus: LULUS (jalankan dengan --enable-asserts)');
 }
